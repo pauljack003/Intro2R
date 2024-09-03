@@ -14,16 +14,19 @@
 #' \dontrun{
 #' v<-myreadxl()
 #' }
-myreadxl <- function(dird = "D:/MATH4773-5773/DATA/Excel/"){
-  if( !dir.exists(dird) & .Platform$OS.type == "windows") {
-    message("Use window to find excel directory")
-   dird <-  choose.dir(caption = "Choose the excel directory!")
-   dird <- paste0(dird, "\\")
-  } else({
-    if( !dir.exists(dird) & .Platform$OS.type != "windows"){
-      stop("You need the correct directory to the Excel folder (must end in directory separator)")
+myreadxl <- function(dird = "D:/MATH4773-5773/DATA/Excel/") {
+    if (!dir.exists(dird)) {
+        if (.Platform$OS.type == "windows") {
+            message("Use window to find excel directory")
+            dird <- utils::choose.dir(caption = "Choose the excel directory!")
+            dird <- paste0(dird, "\\")
+        } else {
+            dird <- readline(prompt = "Please enter the excel directory path (must end in directory separator): ")
+            if (!dir.exists(dird)) {
+                stop("The directory you entered does not exist. Please provide the correct directory to the Excel folder (must end in directory separator).")
+            }
+        }
     }
-  })
 
   #library(readxl)
 
